@@ -42,4 +42,16 @@ public class PostService {
       TypedQuery<PostContent> typedQuery = entityManager.createQuery(jpql, PostContent.class);
       return typedQuery.getResultList();
     }
+
+    @Transactional
+    public String likePost(long postId){
+        PostContent existingPostContent = entityManager.find(PostContent.class,postId);
+        System.out.println(existingPostContent);
+
+        if (existingPostContent!=null){
+            existingPostContent.setLikes(existingPostContent.getLikes()+1);
+            entityManager.persist(existingPostContent);
+        }
+        return "Liked ✅";
+    }
 }

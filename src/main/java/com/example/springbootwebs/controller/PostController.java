@@ -27,4 +27,8 @@ public class PostController {
         return postService.getallPosts();
     }
 
+    @PostMapping("/like-post/{postId}")
+    public String likePost(@PathVariable(value = "postId") long postId){
+        return postService.likePost(postId);
+    }
 }
