@@ -7,10 +7,13 @@ import com.example.springbootwebs.model.User;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.TypedQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Repository
 @Service
@@ -34,4 +37,9 @@ public class PostService {
         }
     }
 
+    public List<PostContent> getallPosts(){
+      String jpql = "SELECT posts FROM PostContent posts";
+      TypedQuery<PostContent> typedQuery = entityManager.createQuery(jpql, PostContent.class);
+      return typedQuery.getResultList();
+    }
 }
