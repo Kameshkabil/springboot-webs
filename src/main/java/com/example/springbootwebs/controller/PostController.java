@@ -31,4 +31,9 @@ public class PostController {
     public String likePost(@PathVariable(value = "postId") long postId){
         return postService.likePost(postId);
     }
+
+    @DeleteMapping("/dislike-post/{postId}")
+    public String dislikePost(@PathVariable(value = "postId") long postId){
+        return postService.dislikePost(postId);
+    }
 }
