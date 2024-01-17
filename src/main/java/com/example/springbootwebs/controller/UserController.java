@@ -16,4 +16,9 @@ public class UserController {
     public String createNewAccount(@RequestBody User user){
         return userService.createNewAccount(user);
     }
+
+    @GetMapping("/user/{id}")
+    public User getUserById(@PathVariable(value = "id") long id){
+        return userService.getUserById(id);
+    }
 }
