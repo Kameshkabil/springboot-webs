@@ -8,8 +8,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class UserService {
@@ -36,8 +38,22 @@ public class UserService {
         if (user!=null){
             return user;
         }else {
-            throw new UserNotFoundException(id+" not found");
+            throw new UserNotFoundException("USER :"+id+" not found");
         }
 
     }
+
+
+    @Transactional
+    @CacheEvict(cacheNames = "users",key = "#id")
+    public String deleteUserProfile(long id){
+        User user = entityManager.find(User.class,id);
+        if (user!=null){
+            entityManager.remove(user);
+            return "USER :"+id+" removed successfully✅";
+        }else{
+            throw new UserNotFoundException("USER :"+id+" not found");
+        }
+    }
+
 }
