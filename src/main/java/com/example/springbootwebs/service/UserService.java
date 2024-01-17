@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -52,6 +53,19 @@ public class UserService {
             entityManager.remove(user);
             return "USER :"+id+" removed successfully✅";
         }else{
+            throw new UserNotFoundException("USER :"+id+" not found");
+        }
+    }
+
+
+    @Transactional
+    @CachePut(cacheNames = "users",key = "#user.id")
+    public User updateUserProfiles(User user,long id){
+        User existingUser = entityManager.find(User.class,id);
+        if(existingUser!=null){
+            entityManager.merge(user);
+            return user;
+        }else {
             throw new UserNotFoundException("USER :"+id+" not found");
         }
     }
