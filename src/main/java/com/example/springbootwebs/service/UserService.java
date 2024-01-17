@@ -1,6 +1,7 @@
 package com.example.springbootwebs.service;
 
 import com.example.springbootwebs.Exception.UserNotFoundException;
+import com.example.springbootwebs.model.PostContent;
 import com.example.springbootwebs.model.User;
 import com.example.springbootwebs.repo.UserRepo;
 import jakarta.persistence.EntityManager;
@@ -15,7 +16,9 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class UserService {
@@ -78,4 +81,16 @@ public class UserService {
         }
     }
 
+
+    public Map<String,Long> findUserPostCount(long userId){
+        String jpql = "SELECT COUNT(p) FROM PostContent p WHERE p.user.id = :userId";
+        TypedQuery<Long> typedQuery = entityManager.createQuery(jpql,Long.class);
+        typedQuery.setParameter("userId", userId);
+        Long postCount = typedQuery.getSingleResult();
+
+        Map<String,Long> postCountResult = new HashMap<>();
+        postCountResult.put("No.Of Post Counts",postCount);
+
+        return postCountResult;
+    }
 }
