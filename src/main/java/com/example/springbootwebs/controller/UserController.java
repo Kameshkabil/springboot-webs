@@ -26,4 +26,10 @@ public class UserController {
     public String deleteUserProfile(@PathVariable(value = "id") long id){
         return userService.deleteUserProfile(id);
     }
+
+    @PutMapping("/user")
+    public User upadateUserprofile(@RequestBody User user,@PathVariable(value = "id")
+                                   long id){
+        return userService.updateUserProfiles(user,id);
+    }
 }
