@@ -4,6 +4,7 @@ import com.example.springbootwebs.Exception.UserNotFoundException;
 import com.example.springbootwebs.model.User;
 import com.example.springbootwebs.repo.UserRepo;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.TypedQuery;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,8 @@ import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 public class UserService {
@@ -31,6 +34,11 @@ public class UserService {
      return "User Account Created Successfully";
     }
 
+    public List<User> getAllUsers(){
+        String jpql = "SELECT u FROM User u";
+        TypedQuery<User> typedQuery = entityManager.createQuery(jpql,User.class);
+        return typedQuery.getResultList();
+    }
 
     @Cacheable(cacheNames = "users",key = "#id")
     public User getUserById(long id){
