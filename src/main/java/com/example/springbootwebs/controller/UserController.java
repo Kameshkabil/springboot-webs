@@ -1,5 +1,6 @@
 package com.example.springbootwebs.controller;
 
+import com.example.springbootwebs.excel.UserExecelData;
 import com.example.springbootwebs.model.User;
 import com.example.springbootwebs.service.UserService;
 import jakarta.servlet.http.HttpServletResponse;
@@ -38,5 +39,20 @@ public class UserController {
     @GetMapping("/view-all-users")
     public List<User> getAllUsers(){
         return userService.getAllUsers();
+    }
+
+    @GetMapping("/users/export")
+    public String exportToExcel(HttpServletResponse response) throws IOException {
+        response.setContentType("application/octet-stream");
+        String headerKey = "Content-Disposition";
+        String headerValue = "attachment; filename=users.xlsx";
+
+        response.setHeader(headerKey, headerValue);
+
+        List<User> userList = userService.getAllUsers();
+
+        UserExecelData userExcelData = new UserExecelData(userList);
+        userExcelData.export(response);
+        return "Downloaded Excel File ✅";
     }
 }
