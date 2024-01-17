@@ -1,6 +1,7 @@
 package com.example.springbootwebs.controller;
 
 import com.example.springbootwebs.excel.UserExecelData;
+import com.example.springbootwebs.model.PostContent;
 import com.example.springbootwebs.model.User;
 import com.example.springbootwebs.service.UserService;
 import jakarta.servlet.http.HttpServletResponse;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api")
@@ -54,5 +56,10 @@ public class UserController {
         UserExecelData userExcelData = new UserExecelData(userList);
         userExcelData.export(response);
         return "Downloaded Excel File ✅";
+    }
+
+    @GetMapping("/find-my-post-count/{id}")
+    public Map<String,Long> findMyPostCount(@PathVariable(value = "id") long id){
+        return userService.findUserPostCount(id);
     }
 }
