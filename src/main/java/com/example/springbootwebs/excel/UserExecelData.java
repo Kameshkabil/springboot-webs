@@ -1,6 +1,7 @@
 package com.example.springbootwebs.excel;
 
 
+import com.example.springbootwebs.model.PostContent;
 import com.example.springbootwebs.model.User;
 import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.http.HttpServletResponse;

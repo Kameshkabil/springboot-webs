@@ -1,7 +1,14 @@
 package com.example.springbootwebs.model;
 
 import jakarta.persistence.*;
+import lombok.Data;
+import lombok.ToString;
 
+import java.util.ArrayList;
+import java.util.List;
+
+@Data
+@ToString(exclude = "postContentList")
 @Entity
 @Table(name = "USER")
 public class User {
@@ -12,6 +19,9 @@ public class User {
     private String email;
     private String mobile;
     private String location;
+
+    @OneToMany(mappedBy = "user" /*, cascade = CascadeType.ALL, fetch = FetchType.EAGER*/)
+    private List<PostContent> postContentList = new ArrayList<>();
 
     public long getId() {
         return id;
@@ -51,5 +61,13 @@ public class User {
 
     public void setLocation(String location) {
         this.location = location;
+    }
+
+    public List<PostContent> getPostContentList() {
+        return postContentList;
+    }
+
+    public void setPostContentList(List<PostContent> postContentList) {
+        this.postContentList = postContentList;
     }
 }
