@@ -24,14 +24,13 @@ public class EmailSenderService {
         message.setTo(toEmail);
         message.setText(body);
         message.setSubject(subject);
-
         mailSender.send(message);
 
         System.out.println("Mail Sent successfully...");
     }
 
 
-    @Scheduled(cron = "0 * 17 * * ?")
+    @Scheduled(cron = "0 * 18 * * ?")
     public void cronJobschedule(){
         System.out.println("cron job!");
         String getAllEmailToDB = "SELECT u.email FROM User u";
@@ -42,5 +41,6 @@ public class EmailSenderService {
             sendMail(email,"K@KMedia🎶📻🎶",
                     "Watch Jallikattu 🐃🐃🐃 Live On 🔊 K@KMedia 📻");
         }
+
     }
 }

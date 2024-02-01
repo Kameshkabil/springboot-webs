@@ -8,6 +8,7 @@ import jakarta.persistence.EntityManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.DeleteMapping;
 
 @Service
 public class CreateCommentService {
@@ -27,4 +28,5 @@ public class CreateCommentService {
         }
         return "Comment Added Successfully!✅";
     }
+
 }
